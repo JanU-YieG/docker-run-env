@@ -11,7 +11,7 @@ services:
     volumes:
       # - ./mysql/mysql-data:/var/lib/mysql
       # - ./mysql/mysql-logs:/var/log/mysql
-      - my-data-mysql:/var/lob/mysql
+      - my-data-mysql:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: borer
     ports: 
