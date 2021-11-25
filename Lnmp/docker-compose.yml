@@ -9,15 +9,17 @@ services:
     tty: true
     restart: always
     volumes:
-      # - ./mysql/mysql-data:/var/lib/mysql
-      # - ./mysql/mysql-logs:/var/log/mysql
-      - my-data-mysql:/var/lib/mysql
+      - ./mysql/mysql-data:/var/lib/mysql:rw
+      - ./mysql/mysql-logs:/var/log/mysql:rw
+      # - my-data-mysql:/var/lib/mysql
+      - /home/borer/compony/juli_oa_com.sql:/home/juli.sql
     environment:
+      # MYSQL_ROOT_NAME: oa_test_com
       MYSQL_ROOT_PASSWORD: borer
-    ports: 
+    ports:
       - "3306:3306"
-    # networks:
-      # - lnmp-networks
+    networks:
+      - lnmp-networks
 
 
   php:
@@ -32,10 +34,10 @@ services:
       # - ./php/php.ini:/usr/local/etc/php/php.ini
     ports:
       - "9000:9000"
-    depends_on:
-      - mysql
-    # networks:
-      # - lnmp-networks
+    # depends_on:
+      # - mysql
+    networks:
+      - lnmp-networks
         # ipv4_address: 101.11.11.10
 
   nginx:
@@ -48,14 +50,15 @@ services:
     tty: true
     restart: always
     ports:
-      - "80:80"
+      # - "80:80"
       - "443:443"
       - "8001:8001"
       - "8002:8002"
+      - "8009:8009"
     depends_on:
       - php
-    # networks:
-      # - lnmp-networks
+    networks:
+      - lnmp-networks
         # ipv4_address: 101.11.11.11
 
   # php:
@@ -75,8 +78,7 @@ services:
     # networks:
       # - lnmp-networks
         # ipv4_address: 101.11.11.10
-# networks:
-  # lnmp-networks:
+networks:
+  lnmp-networks:
 volumes:
   my-data-mysql:
-  
