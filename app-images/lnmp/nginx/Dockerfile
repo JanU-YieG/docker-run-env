@@ -9,3 +9,4 @@ FROM nginx:1.21.1
     # && cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
     # && echo "Asia/Shanghai" > /etc/timezone \
     # && apk del tzdata
+EXPOSE 80 8001 8002 8003

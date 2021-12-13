@@ -1,0 +1,29 @@
+version: "3"
+
+services:
+  lnmp:
+    build:
+      context: ./alpine-environments/lnmp
+      dockerfile: Dockerfile
+    container_name: lnmp
+    tty: true
+    restart: always
+    # volumes:
+      # - ./alpine-environments/lnmp/php/www:/var/www/html:rw
+      # - ./alpine-environments/lnmp/mysql/mysql-data:/var/lib/mysql:rw
+      # - ./alpine-environments/lnmp/mysql/mysql-logs:/var/log/mysql:rw
+      # - /home/borer/compony/juli_oa_com.sql:/data/juli.sql
+    # enviroment:
+      # ALPINE: 'borer'
+    # ports:
+      # - "80:80"
+      # - "3306:3306"
+    # depends_on:
+      # - 
+    networks:
+      - alpine-lnmp-network
+
+networks:
+  alpine-lnmp-network:
+# volumes:
+  # my-data-mysql:

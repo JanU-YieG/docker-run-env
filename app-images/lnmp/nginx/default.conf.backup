@@ -1,0 +1,118 @@
+server {
+    listen       80;
+    server_name  localhost;
+
+    #access_log  /var/log/nginx/host.access.log  main;
+
+    # root   /www;
+    # index index.php index.html index.htm;
+    location / {
+        root   /usr/share/nginx/html;
+        index  index.html index.htm index.php;
+        if (!-e $request_filename) {
+   		    rewrite  ^(.*)$  /index.php?s=/$1  last;
+        }
+#try_files $uri $uri/ /index.php?$query_string;
+        autoindex  on;
+    }
+
+    #error_page  404              /404.html;
+
+    # redirect server error pages to the static page /50x.html
+    #
+    error_page   500 502 503 504  /50x.html;
+    location = /50x.html {
+        root   /usr/share/nginx/html;
+    }
+
+    # proxy the PHP scripts to Apache listening on 127.0.0.1:80
+    #
+    #location ~ \.php$ {
+    #    proxy_pass   http://127.0.0.1;
+    #}
+
+    # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
+    #
+    location ~ \.php$ {
+    #    root           html;
+        # fastcgi_pass   101.11.11.10:9000;
+        # fastcgi_pass   127.0.0.1:9000;
+        fastcgi_pass   php:9000;
+        fastcgi_index  index.php;
+   #    fastcgi_param  SCRIPT_FILENAME  /scripts$fastcgi_script_name;
+        fastcgi_param  SCRIPT_FILENAME  /var/www/html/$fastcgi_script_name;
+        fastcgi_param  PHP_VALUE  "open_basedir=/var/www/html/:/tmp/:/proc/";
+#fastcgi_param  SCRIPT_FILENAME  /var/www/html/$fastcgi_script_name;
+        include        fastcgi_params;
+    }
+
+    # deny access to .htaccess files, if Apache's document root
+    # concurs with nginx's one
+    #
+    #location ~ /\.ht {
+    #    deny  all;
+    #}
+}
+server {
+    listen 8001;
+    server_name juli.com;
+    location / {
+        root   /usr/share/nginx/html/juli;
+        index  index.html index.htm index.php;
+        if (!-e $request_filename) {
+   		    rewrite  ^(.*)$  /index.php?s=/$1  last;
+        }
+    }
+
+    location ~ \.php$ {
+    #    root           html;
+        # fastcgi_pass   101.11.11.10:9000;
+        # fastcgi_pass   127.0.0.1:9000;
+        fastcgi_pass   php:9000;
+        fastcgi_index  index.php;
+   #    fastcgi_param  SCRIPT_FILENAME  /scripts$fastcgi_script_name;
+        fastcgi_param  SCRIPT_FILENAME /var/www/html/juli/$fastcgi_script_name;
+#fastcgi_param  PHP_VALUE  "open_basedir=/var/www/html/wansifang:/tmp/:/proc/";
+#fastcgi_param  SCRIPT_FILENAME  /var/www/html/$fastcgi_script_name;
+        include        fastcgi_params;
+    }
+
+    # deny access to .htaccess files, if Apache's document root
+    # concurs with nginx's one
+    #
+    #location ~ /\.ht {
+    #    deny  all;
+    #}
+ }
+
+server {
+    listen 8002;  
+    server_name borer.com;  
+    location / {
+        root   /usr/share/nginx/html/tp5/public;
+        index  index.html index.htm index.php;
+        if (!-e $request_filename) {
+   		    rewrite  ^(.*)$  /index.php?s=/$1  last;
+        }
+    }
+
+    location ~ \.php$ {
+    #    root           html;
+        # fastcgi_pass   101.11.11.10:9000;
+        # fastcgi_pass   127.0.0.1:9000;
+        fastcgi_pass   php:9000;
+        fastcgi_index  index.php;
+   #    fastcgi_param  SCRIPT_FILENAME  /scripts$fastcgi_script_name;
+        fastcgi_param  SCRIPT_FILENAME  /var/www/html/tp5/public/$fastcgi_script_name;
+#fastcgi_param  PHP_VALUE  "open_basedir=/var/www/html/tp:/tmp/:/proc/";
+#fastcgi_param  SCRIPT_FILENAME  /var/www/html/$fastcgi_script_name;
+        include        fastcgi_params;
+    }
+
+    # deny access to .htaccess files, if Apache's document root
+    # concurs with nginx's one
+    #
+    #location ~ /\.ht {
+    #    deny  all;
+    #}
+ }
