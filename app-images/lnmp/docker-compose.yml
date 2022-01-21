@@ -32,7 +32,7 @@ services:
       - ./www:/var/www/html:rw
       # - ./php/php-fpm.conf:/usr/local/etc/php-fpm.conf
       # - ./php/php-fpm.d:/usr/local/etc/php-fpm.d
-      - ./php/php.ini:/etc/php8/php.ini
+      - ./php/php.ini:/usr/local/etc/php/php.ini
     # ports:
       # - "9001:9001"
     networks:
@@ -116,6 +116,28 @@ services:
           test: ["CMD", "redis-cli", "ping"]
           retries: 3
           timeout: 5s
+
+  # wechat-devtools:
+      # image: 'canyoutle/wxdt'
+      # container_name:  wxdt
+      # volumes:
+        # - $HOME/wechat-projects:/projects
+      # ports:
+        # - 6080:80
+      # networks:
+        # - lnmp-networks
+
+  # devtools:
+    # image: sigoden/wechat-devtools
+    # volumes:
+      # - /tmp/.X11-unix:/tmp/.X11-unix
+      # - $HOME/.config/wechat-dev-tools:/home/node/.config/微信web开发者工具
+      # - $HOME/weapp:/home/node/weapp
+    # environment:
+      # - DISPLAY=$DISPLAY
+      # - LANG=zh_CN.UTF-8 # 可选 默认zh_CN
+      # - GID=$GID # 可选 默认1000 主机当前用户 gid 解决挂载目录访问权限问题
+      # - UID=$UID # 可选 默认1000 主机当前用户 uid 解决挂载目录访问权限问题
 
 networks:
   lnmp-networks:

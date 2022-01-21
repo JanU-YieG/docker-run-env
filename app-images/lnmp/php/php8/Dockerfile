@@ -1,5 +1,5 @@
 # Auto-generated via Ansible: edit build/ansible/DOCKERFILES/Dockerfile-base.j2 instead.
-FROM php:8-fpm-alpine
+FROM php:8.1-fpm-alpine
 # MAINTAINER "borer" <borer@everythingcli.org>
 
 
@@ -45,12 +45,21 @@ ENV    TIMEZONE="Asia/Shanghai"
 ###
 RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories \
     # && apk update \
+    # && apk add mysql \
+    # && apk add php-mysql \
+    # && rm -f /var/cache/apk/* \
     # && apk upgrade \
     # && docker-php-source extract \
     && docker-php-ext-install \
-        pdo_mysql
+        bcmath \
+        pdo_mysql \
+        pdo \
+        mysqli \
+        # pdo_sqlite
         # mbstring \
-    # && docker-php-ext-enable \
+    && docker-php-ext-enable \
+        pdo_mysql \
+        mysqli
         # openssl \
         # tokenizer \
         # xml \

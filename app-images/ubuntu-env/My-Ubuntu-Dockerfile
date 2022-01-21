@@ -1,0 +1,29 @@
+FROM ubuntu:latest
+
+RUN apt update \
+    # && apt install -y wget gnupg gnupg2 gnupg1 apt-utils software-properties-common \
+    # && apt install -y libpangocairo-1.0-0 libx11-xcb1 libxcomposite1 libxcursor1 libxdamage1 libxi6 libxtst6 libnss3 libcups2 libxss1 libxrandr2 libasound2 libatk1.0-0 libgtk-3-0 \
+    # && dpkg --add-architecture i386 \
+    # && wget -nc https://dl.winehq.org/wine-builds/winehq.key \
+    # && apt-key add winehq.key \
+    # && apt-add-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ bionic main' \
+    # && apt update \
+    && apt install -y wine-binfmt \
+    && update-binfmts --import /usr/share/binfmts/wine \
+    && apt install -y --no-install-recommends --allow-unauthenticated winehq-stable \
+    && apt install -y git \
+    && apt install -y gnutls-bin \
+    && git config --global http.sslVerify false \
+    && git config --global http.postBuffer 1048576000 \
+    && git clone https://github.com/JanU-YieG/wechat_web_devtools.git \
+    && cd wechat_web_devtools \
+    && mkdir $HOME/.fonts \
+    && mv ./Consolas.ttf $HOME/.fonts/ \
+    && fc-cache -f \
+    && ./bin/wxdt install \
+    # && ./bin/update_package_nw.sh -l https://servicewechat.com/wxa-dev-logic/download_redirect?type=x64&from=mpwiki&download_version=1052111300&version_type=1 -v 1.05.2111300 \
+    && ln -s $PWD/bin/wxdt /usr/bin/wxdt \
+
+    && rm -rf /var/lib/apt/lists/* \
+
+CMD ["/usr/bin/wxdt"]

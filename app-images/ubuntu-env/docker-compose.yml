@@ -1,0 +1,33 @@
+version: "3.8"
+
+services:
+  wxdt:
+    build:
+      context: ./
+      dockerfile: My-Ubuntu-Dockerfile
+    container_name: app-images-my-ubuntu
+    tty: true
+    restart: always
+    volumes:
+      # - lnmp-mysql-data:/var/lib/mysql:rw
+      # - ./mysql/mysql-logs:/var/log/mysql:rw
+      # - my-data-mysql:/var/lib/mysql
+      # - $HOME/.config/wechat_web_devtools:~/.config/wechat_web_devtools
+      - $HOME/.Xauthority:/root/.Xauthority:rw
+      - /home/weapps:/home/weapps
+      - /tmp/.X11-unix:/tmp/.X11-unix
+    environment:
+      - DISPLAY=${DISPLAY}
+    # ports:
+      # - "3306:3306"
+    # networks:
+      # - lnmp-networks
+    network_mode: host
+
+
+
+# networks:
+  # lnmp-networks:
+# volumes:
+  # lnmp-phpmyadmin:
+  # lnmp-mysql-data:
